@@ -11,6 +11,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
@@ -37,6 +39,7 @@ import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.trees.Tree;
 import edu.stanford.nlp.trees.TreeCoreAnnotations.TreeAnnotation;
 import edu.stanford.nlp.util.CoreMap;
+import foo.VectorSpaceRetrieval;
 import foo.typesystems.Document;
 import foo.typesystems.Token;
 import foo.utils.Utils;
@@ -48,9 +51,14 @@ public class DocumentVectorAnnotator extends JCasAnnotator_ImplBase {
   @Override
   public void initialize(UimaContext aContext) throws ResourceInitializationException{
     try {
+      URL stopwordUrl = DocumentVectorAnnotator.class.getResource("/stopwords.txt");
+      if (stopwordUrl == null) {
+         throw new IllegalArgumentException("Error opening src/main/resources/stopwords.txt");
+      }
       stopWordMap = new HashMap<String, Integer>();
-      File file = new File("src/main/resources/stopwords.txt");    
-      BufferedReader bf_reader = new BufferedReader(new FileReader(file));
+      //File file = new File("src/main/resources/stopwords.txt");    
+      //BufferedReader bf_reader = new BufferedReader(new FileReader(file));
+      BufferedReader bf_reader = new BufferedReader(new InputStreamReader(stopwordUrl.openStream()));
       String result_s;
       while ((result_s = bf_reader.readLine()) != null)
       {
