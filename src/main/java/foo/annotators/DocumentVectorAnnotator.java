@@ -53,7 +53,7 @@ public class DocumentVectorAnnotator extends JCasAnnotator_ImplBase {
     try {
       URL stopwordUrl = DocumentVectorAnnotator.class.getResource("/stopwords.txt");
       if (stopwordUrl == null) {
-         throw new IllegalArgumentException("Error opening src/main/resources/stopwords.txt");
+         throw new IllegalArgumentException("Error opening /stopwords.txt");
       }
       stopWordMap = new HashMap<String, Integer>();
       //File file = new File("src/main/resources/stopwords.txt");    
